@@ -17,9 +17,12 @@ public class TeleBookController {
     private Scanner sc = new Scanner(System.in);
 
     public void loop() {
-        showOptions();
-        Options option = chooseOption();
-        executeOption(option);
+        Options option = null;
+        do {
+            showOptions();
+            option = chooseOption();
+            executeOption(option);
+        } while (option != Options.END);
     }
 
     private void showOptions() {
