@@ -18,6 +18,8 @@ public class TeleBookController {
 
     public void loop() {
         showOptions();
+        Options option = chooseOption();
+        executeOption(option);
     }
 
     private void showOptions() {
@@ -73,12 +75,20 @@ public class TeleBookController {
     }
 
     private void addContact() {
-        System.out.println("Podaj nazwę:");
-        String name = sc.nextLine();
-        System.out.println("Podaj numer:");
-        String number = sc.nextLine();
-        teleBook.add(name, number);
-
+        try {
+            System.out.println("Podaj nazwę:");
+            String name = sc.nextLine();
+            System.out.println("Podaj numer:");
+            String number = sc.nextLine();
+            boolean add = teleBook.add(name, number);
+            if (add) {
+                System.out.println("Dodano " + name);
+            } else {
+                System.out.println("nie dodano - wpis istnieje");
+            }
+        } catch (IllegalArgumentException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     private void close() {
