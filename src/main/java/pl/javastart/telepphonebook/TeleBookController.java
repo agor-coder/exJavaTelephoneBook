@@ -5,6 +5,8 @@
  */
 package pl.javastart.telepphonebook;
 
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 /**
@@ -19,9 +21,15 @@ public class TeleBookController {
     public void loop() {
         Options option = null;
         do {
-            showOptions();
-            option = chooseOption();
-            executeOption(option);
+            try {
+                showOptions();
+                option = chooseOption();
+                sc.nextLine();
+                executeOption(option);
+            } catch (NoSuchElementException ex) {
+                System.out.println("nie ma takiej opcji - jeszcze raz");
+                sc.nextLine();
+            }
         } while (option != Options.END);
     }
 
@@ -35,7 +43,7 @@ public class TeleBookController {
     private Options chooseOption() {
         System.out.println("Wybierz numer:");
         int number = sc.nextInt();
-        sc.nextLine();
+       // sc.nextLine();
         return Options.convertToOption(number);
     }
 
@@ -53,6 +61,9 @@ public class TeleBookController {
             case SEARCH_BY_NUMBER:
                 searchByNumber();
                 break;
+            case PRINT_CONTACS:
+                printBook();
+                break;
             case END:
                 close();
                 break;
@@ -62,19 +73,34 @@ public class TeleBookController {
     private void delete() {
         System.out.println("Podaj nazwę:");
         String name = sc.nextLine();
-        teleBook.remove(name);
+        boolean removed = teleBook.remove(name);
+        if (removed) {
+            System.out.println("Usunięto " + name);
+        } else {
+            System.out.println("nie ma takiego");
+        }
     }
 
     private void searchByNumber() {
         System.out.println("Podaj numer:");
         String number = sc.nextLine();
-        teleBook.finByNumber(number);
+        List<Contact> found = teleBook.finByNumber(number);
+        if (!found.isEmpty()) {
+            found.forEach(System.out::println);
+        } else {
+            System.out.println("brak wyników wyszukiwania numbers");
+        }
     }
 
     private void searchByName() {
         System.out.println("Podaj nazwę:");
         String name = sc.nextLine();
-        teleBook.finByName(name);
+        List<Contact> found = teleBook.finByName(name);
+        if (!found.isEmpty()) {
+            found.forEach(System.out::println);
+        } else {
+            System.out.println("brak wyników wyszukiwania names");
+        }
     }
 
     private void addContact() {
@@ -95,7 +121,15 @@ public class TeleBookController {
     }
 
     private void close() {
+        System.out.println("Koniec programu");
         sc.close();
+    }
+
+    private void printBook() {
+        //teleBook.getContacts().entrySet().forEach(System.out::println);
+        teleBook.getContacts().values().forEach(System.out::println);
+       
+        
     }
 
 }

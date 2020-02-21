@@ -40,4 +40,9 @@ public class Contact implements Comparable<Contact> {
         return this.name.compareTo(o.name);
     }
 
+    @Override
+    public String toString() {
+        return name + " : " + number;
+    }
+
 }

@@ -25,12 +25,17 @@ public class TeleBook {
         this.contacts = contacts;
     }
 
+    public Map<String, Contact> getContacts() {
+        return contacts;
+    }
+    
+
     public boolean add(String name, String telephone) {
         if (name == null || telephone == null) {
             throw new NullPointerException("name and telephone can't be null");
         }
         if (name.isEmpty() || telephone.isEmpty()) {
-            throw new IllegalArgumentException("name and telephone can't be empty");
+            throw new IllegalArgumentException("name or telephone can't be empty");
         }
         if (!contacts.containsKey(name)) {
             contacts.put(name, new Contact(name, telephone));
@@ -73,4 +78,10 @@ public class TeleBook {
         return foundNumbers;
 
     }
+
+    
+
+   
+   
+    
 }

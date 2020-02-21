@@ -16,7 +16,8 @@ public enum Options {
     REMOVE_CONTACT(1, "Usuń kontakt"),
     SEARCH_BY_NAME(2, "Szukaj nazwy"),
     SEARCH_BY_NUMBER(3, "Szukaj numeru"),
-    END(4, "Koniec");
+    PRINT_CONTACS(4,"Drukuj"),
+    END(5, "Koniec");
 
     private final int number;
     private final String desription;
