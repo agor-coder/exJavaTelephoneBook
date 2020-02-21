@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.javastart.telepphonebook;
+package pl.javastart.telephonebook.model;
 
 /**
  *
@@ -42,7 +42,11 @@ public class Contact implements Comparable<Contact> {
 
     @Override
     public String toString() {
-        return name + " : " + number;
+        return String.format("%-20s :  %s", name, number);
+    }
+
+    public String toCsv() {
+        return name + ";" + number;
     }
 
 }

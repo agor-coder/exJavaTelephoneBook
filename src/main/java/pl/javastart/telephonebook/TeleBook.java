@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.javastart.telepphonebook;
+package pl.javastart.telephonebook;
 
+import pl.javastart.telephonebook.model.Contact;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +52,7 @@ public class TeleBook {
     public List<Contact> finByName(String name) {
         List<Contact> foundNames = new ArrayList<>();
         for (var entry : contacts.entrySet()) {
-            if (entry.getKey().contains(name)) {
+            if (entry.getKey().toLowerCase().contains(name.toLowerCase())) {// ignore case
                 foundNames.add(entry.getValue());
             }
         }

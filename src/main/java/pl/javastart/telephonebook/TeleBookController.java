@@ -3,11 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.javastart.telepphonebook;
+package pl.javastart.telephonebook;
 
+import java.io.IOException;
+import pl.javastart.telephonebook.model.Options;
+import pl.javastart.telephonebook.model.Contact;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import pl.javastart.telephonebook.FileManagers.FileUtils;
 
 /**
  *
@@ -17,6 +21,10 @@ public class TeleBookController {
 
     private TeleBook teleBook = new TeleBook();
     private Scanner sc = new Scanner(System.in);
+
+    public TeleBookController() {
+        teleBook = FileUtils.read();
+    }
 
     public void loop() {
         Options option = null;
@@ -43,7 +51,7 @@ public class TeleBookController {
     private Options chooseOption() {
         System.out.println("Wybierz numer:");
         int number = sc.nextInt();
-       // sc.nextLine();
+        // sc.nextLine();
         return Options.convertToOption(number);
     }
 
@@ -121,15 +129,25 @@ public class TeleBookController {
     }
 
     private void close() {
-        System.out.println("Koniec programu");
         sc.close();
+        try {
+            FileUtils.save(teleBook);
+            System.out.println("zapisano");
+        } catch (IOException ex) {
+            System.out.println("nie udało się zapisać");
+        }
+        System.out.println("Koniec programu");
+
     }
 
     private void printBook() {
-        //teleBook.getContacts().entrySet().forEach(System.out::println);
-        teleBook.getContacts().values().forEach(System.out::println);
-       
-        
+        if (teleBook.getContacts().isEmpty()) {
+            System.out.println("Pusta książka");
+        } else //teleBook.getContacts().entrySet().forEach(System.out::println);
+        {
+            teleBook.getContacts().values().forEach(System.out::println);
+        }
+
     }
 
 }

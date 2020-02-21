@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.javastart.telepphonebook;
+package pl.javastart.telephonebook.App;
+
+import pl.javastart.telephonebook.TeleBookController;
 
 /**
  *
