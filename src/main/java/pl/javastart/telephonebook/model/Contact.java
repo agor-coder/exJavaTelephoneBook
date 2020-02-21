@@ -9,7 +9,7 @@ package pl.javastart.telephonebook.model;
  *
  * @author ET4
  */
-public class Contact implements Comparable<Contact> {
+public class Contact  {
 
     private String name;
     private String number;
@@ -35,10 +35,10 @@ public class Contact implements Comparable<Contact> {
         this.number = number;
     }
 
-    @Override
-    public int compareTo(Contact o) {
-        return this.name.compareTo(o.name);
-    }
+//    @Override
+//    public int compareTo(Contact o) {
+//        return this.name.compareTo(o.name);
+//    }
 
     @Override
     public String toString() {

@@ -7,6 +7,7 @@ package pl.javastart.telephonebook;
 
 import pl.javastart.telephonebook.model.Contact;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -29,7 +30,6 @@ public class TeleBook {
     public Map<String, Contact> getContacts() {
         return contacts;
     }
-    
 
     public boolean add(String name, String telephone) {
         if (name == null || telephone == null) {
@@ -37,6 +37,11 @@ public class TeleBook {
         }
         if (name.isEmpty() || telephone.isEmpty()) {
             throw new IllegalArgumentException("name or telephone can't be empty");
+        }
+        for (int i = 0; i < telephone.length(); i++) {
+            if (!Character.isDigit(telephone.charAt(i))) {
+                throw new InputMismatchException("tylko cyfry - JESZCZE RAZ");
+            }
         }
         if (!contacts.containsKey(name)) {
             contacts.put(name, new Contact(name, telephone));
@@ -58,6 +63,7 @@ public class TeleBook {
         }
         return foundNames;
     }
+
     ///lub
     /*public List<Contact> finByName(String name) {
         List<Contact> findNames = new ArrayList<>();
@@ -68,7 +74,6 @@ public class TeleBook {
         }
         return findNames;
     }*/
-    
     public List<Contact> finByNumber(String number) {
         List<Contact> foundNumbers = new ArrayList<>();
         for (Contact contact : contacts.values()) {
@@ -80,9 +85,4 @@ public class TeleBook {
 
     }
 
-    
-
-   
-   
-    
 }

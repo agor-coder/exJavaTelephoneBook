@@ -6,6 +6,7 @@
 package pl.javastart.telephonebook;
 
 import java.io.IOException;
+import java.util.InputMismatchException;
 import pl.javastart.telephonebook.model.Options;
 import pl.javastart.telephonebook.model.Contact;
 import java.util.List;
@@ -32,7 +33,7 @@ public class TeleBookController {
             try {
                 showOptions();
                 option = chooseOption();
-                sc.nextLine();
+                //sc.nextLine();
                 executeOption(option);
             } catch (NoSuchElementException ex) {
                 System.out.println("nie ma takiej opcji - jeszcze raz");
@@ -51,7 +52,7 @@ public class TeleBookController {
     private Options chooseOption() {
         System.out.println("Wybierz numer:");
         int number = sc.nextInt();
-        // sc.nextLine();
+        sc.nextLine();
         return Options.convertToOption(number);
     }
 
@@ -123,7 +124,9 @@ public class TeleBookController {
             } else {
                 System.out.println("nie dodano - wpis istnieje");
             }
-        } catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException | NullPointerException ex) {
+            System.out.println(ex.getMessage());
+        } catch (InputMismatchException ex) {
             System.out.println(ex.getMessage());
         }
     }
@@ -145,7 +148,11 @@ public class TeleBookController {
             System.out.println("Pusta książka");
         } else //teleBook.getContacts().entrySet().forEach(System.out::println);
         {
-            teleBook.getContacts().values().forEach(System.out::println);
+          teleBook.getContacts().values()
+                    .stream().sorted(new Comp())
+                    .forEach(System.out::println);//sort po comparatorze Comp name ignore case
+           // teleBook.getContacts()
+          // .values().forEach(System.out::println);//sort domyślny po kluczach
         }
 
     }
